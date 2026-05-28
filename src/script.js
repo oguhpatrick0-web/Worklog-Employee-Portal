@@ -1,3 +1,8 @@
+// Supabase Client Initialization
+const supabaseUrl = 'https://ciaqoqwflprihajfxsct.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNpYXFvcXdmbHByaWhhamZ4c2N0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5ODM4MDQsImV4cCI6MjA5NTU1OTgwNH0.OcZzZTtB5lpQo800seu1T6JE8sfvKzfGTTn1CwWPUr8';
+const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
 let mode = 'manual', uploadedFile = null;
 
 const fields = () => ({
@@ -105,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-function doSubmit() {
+async function doSubmit() {
   const f = fields();
   let ok = true;
 
@@ -125,6 +130,12 @@ function doSubmit() {
 
   if (!ok) return;
 
+  // Show loading indicator on submit button
+  const submitBtn = document.getElementById('submitBtn');
+  const originalBtnText = submitBtn.innerHTML;
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = `<i class="ti ti-loader" aria-hidden="true" style="font-size:14px;margin-right:7px;vertical-align:-1px;display:inline-block;animation:spin 1s linear infinite"></i>Submitting...`;
+
   let formattedPeriod = f.period;
   if (f.period.includes('-W')) {
     const parts = f.period.split('-W');
@@ -133,22 +144,47 @@ function doSubmit() {
 
   const hoursDisplay = mode === 'manual' ? parseFloat(f.hours).toFixed(1) + ' hrs' : uploadedFile.name;
 
-  document.getElementById('summaryBox').innerHTML =
-    row('Employee Name', f.name) + 
-    row('Country', f.country) + 
-    row('Period', formattedPeriod) + 
-    row('Log Record', hoursDisplay, true);
+  // Construct Supabase payload
+  const logData = {
+    employee_name: f.name,
+    country: f.country,
+    period: formattedPeriod,
+    hours_worked: mode === 'manual' ? parseFloat(f.hours) : null,
+    filename: mode === 'upload' && f.file ? f.file.name : null,
+    file_size: mode === 'upload' && f.file ? f.file.size : null,
+    notes: document.getElementById('fNotes').value.trim() || null
+  };
 
-  const now = new Date();
-  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-  const dateStr = now.toLocaleDateString('en-US', options);
-  const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
-  const ms = String(now.getMilliseconds()).padStart(3, '0');
+  try {
+    const { data: insertResult, error } = await supabaseClient
+      .from('work_logs')
+      .insert([logData]);
 
-  document.getElementById('submitTime').textContent = `${dateStr} at ${timeStr}.${ms}`;
+    if (error) throw error;
 
-  document.getElementById('formCard').style.display = 'none';
-  document.getElementById('successCard').style.display = 'block';
+    document.getElementById('summaryBox').innerHTML =
+      row('Employee Name', f.name) + 
+      row('Country', f.country) + 
+      row('Period', formattedPeriod) + 
+      row('Log Record', hoursDisplay, true);
+
+    const now = new Date();
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const dateStr = now.toLocaleDateString('en-US', options);
+    const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
+    const ms = String(now.getMilliseconds()).padStart(3, '0');
+
+    document.getElementById('submitTime').textContent = `${dateStr} at ${timeStr}.${ms}`;
+
+    document.getElementById('formCard').style.display = 'none';
+    document.getElementById('successCard').style.display = 'block';
+  } catch (err) {
+    console.error('Submission failed:', err);
+    alert('Failed to submit work log to database. Please check connection and try again.');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalBtnText;
+  }
 }
 
 function row(k, v, highlight = false) {
@@ -172,3 +208,8 @@ function doReset() {
 document.addEventListener('DOMContentLoaded', () => {
   track();
 });
+
+// Adding spin animation style dynamically for submit loading indicator
+const styleSheet = document.createElement("style");
+styleSheet.innerText = `@keyframes spin { 100% { transform: rotate(360deg); } }`;
+document.head.appendChild(styleSheet);
