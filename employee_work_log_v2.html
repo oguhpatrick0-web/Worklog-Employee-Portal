@@ -1,0 +1,653 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap');
+  @import url('https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css');
+
+  .bg-scene {
+    min-height: 640px;
+    background: #0f1923;
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .bg-glow-1 {
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(56,132,255,0.18) 0%, transparent 70%);
+    top: -100px; left: -100px;
+    pointer-events: none;
+  }
+
+  .bg-glow-2 {
+    position: absolute;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(99,212,160,0.12) 0%, transparent 70%);
+    bottom: -80px; right: -60px;
+    pointer-events: none;
+  }
+
+  .logo-bar {
+    position: absolute;
+    top: 20px; left: 24px;
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .logo-mark {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #3884ff 0%, #1a5fd4 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px; color: #fff;
+    letter-spacing: -1px;
+    font-weight: bold;
+  }
+
+  .logo-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 16px;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 0.3px;
+  }
+
+  .logo-dot { color: #3884ff; }
+
+  .period-badge {
+    position: absolute;
+    top: 20px; right: 20px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    background: rgba(255,255,255,0.06);
+    border: 0.5px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 4px 10px;
+    letter-spacing: 0.5px;
+  }
+
+  .form-card {
+    background: rgba(255,255,255,0.04);
+    border: 0.5px solid rgba(255,255,255,0.12);
+    border-radius: 18px;
+    padding: 2rem 2rem 1.75rem;
+    width: 100%;
+    max-width: 460px;
+    position: relative;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: #fff;
+    margin: 0 0 4px;
+    letter-spacing: -0.3px;
+  }
+
+  .card-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+    margin: 0 0 1.5rem;
+  }
+
+  .divider-line {
+    border: none;
+    border-top: 0.5px solid rgba(255,255,255,0.1);
+    margin: 0 0 1.5rem;
+  }
+
+  .fl-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 6px;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+  }
+
+  .fl-req { color: #ff6b6b; }
+
+  .fl-field { margin-bottom: 1.1rem; }
+
+  .fl-input, .fl-select, .fl-textarea {
+    width: 100%;
+    box-sizing: border-box;
+    background: rgba(255,255,255,0.07);
+    border: 0.5px solid rgba(255,255,255,0.14);
+    border-radius: 10px;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    -webkit-appearance: none;
+  }
+
+  .fl-input::placeholder, .fl-textarea::placeholder { color: rgba(255,255,255,0.25); }
+
+  .fl-input:focus, .fl-select:focus, .fl-textarea:focus {
+    border-color: #3884ff;
+    background: rgba(56,132,255,0.08);
+  }
+
+  .fl-input.err, .fl-select.err, .drop-zone.err { border-color: #ff6b6b !important; }
+
+  .fl-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='rgba(255,255,255,0.45)' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 14px;
+    padding-right: 36px;
+    cursor: pointer;
+  }
+
+  .fl-select option { background: #1a2535; color: #fff; }
+
+  .fl-error {
+    font-size: 11.5px;
+    color: #ff8a8a;
+    margin-top: 4px;
+    display: none;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .fl-error.show { display: flex; }
+
+  .tabs {
+    display: flex; gap: 6px; margin-bottom: 10px;
+  }
+
+  .tab-btn {
+    flex: 1; padding: 8px 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12.5px; font-weight: 500;
+    border: 0.5px solid rgba(255,255,255,0.14);
+    border-radius: 8px;
+    background: transparent;
+    color: rgba(255,255,255,0.45);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .tab-btn.active {
+    background: rgba(56,132,255,0.2);
+    border-color: rgba(56,132,255,0.5);
+    color: #79b4ff;
+  }
+
+  .drop-zone {
+    border: 1.5px dashed rgba(255,255,255,0.18);
+    border-radius: 10px;
+    padding: 1.2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .drop-zone:hover, .drop-zone.drag {
+    border-color: #3884ff;
+    background: rgba(56,132,255,0.06);
+  }
+
+  .drop-icon { font-size: 22px; color: rgba(255,255,255,0.3); margin-bottom: 5px; }
+  .drop-text { font-size: 13px; color: rgba(255,255,255,0.4); }
+  .drop-hint { font-size: 11.5px; color: rgba(255,255,255,0.25); margin-top: 2px; }
+
+  .file-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(99,212,160,0.12);
+    border: 0.5px solid rgba(99,212,160,0.3);
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 12.5px; color: #63d4a0;
+    margin-top: 8px;
+  }
+
+  .file-remove {
+    cursor: pointer; color: rgba(99,212,160,0.6); font-size: 14px;
+    transition: color 0.15s;
+  }
+
+  .file-remove:hover { color: #ff6b6b; }
+
+  .submit-btn {
+    width: 100%; padding: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 600;
+    border: none; border-radius: 10px;
+    background: linear-gradient(135deg, #3884ff 0%, #1a5fd4 100%);
+    color: #fff; cursor: pointer;
+    margin-top: 1.25rem;
+    transition: opacity 0.2s, transform 0.1s;
+    letter-spacing: 0.2px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  .submit-btn:not(:disabled):hover { opacity: 0.92; }
+  .submit-btn:not(:disabled):active { transform: scale(0.98); }
+
+  .progress-bar {
+    height: 3px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 99px;
+    margin-bottom: 1.25rem;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3884ff, #63d4a0);
+    border-radius: 99px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  .progress-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    text-align: right;
+    margin-top: 3px;
+    margin-bottom: 1rem;
+  }
+
+  .success-view {
+    display: none;
+    text-align: center;
+    padding: 1.5rem 0.5rem;
+  }
+
+  .success-view.show { display: block; }
+
+  .success-ring {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: rgba(99,212,160,0.15);
+    border: 1.5px solid rgba(99,212,160,0.4);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 28px; color: #63d4a0;
+    animation: popIn 0.4s ease;
+  }
+
+  @keyframes popIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    70% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .success-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px; color: #fff; margin: 0 0 6px;
+  }
+
+  .success-msg {
+    font-size: 13px; color: rgba(255,255,255,0.45); margin: 0 0 1.25rem;
+  }
+
+  .summary-box {
+    background: rgba(255,255,255,0.05);
+    border: 0.5px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 12px 14px;
+    text-align: left;
+    margin-bottom: 1.25rem;
+  }
+
+  .sum-row {
+    display: flex; justify-content: space-between;
+    font-size: 12.5px; padding: 4px 0;
+    border-bottom: 0.5px solid rgba(255,255,255,0.06);
+  }
+
+  .sum-row:last-child { border-bottom: none; }
+  .sum-key { color: rgba(255,255,255,0.4); }
+  .sum-val { color: rgba(255,255,255,0.85); font-weight: 500; }
+  .sum-val.accent { color: #63d4a0; }
+
+  .reset-link {
+    font-size: 13px;
+    color: #3884ff;
+    background: none; border: none;
+    cursor: pointer; padding: 0;
+    font-family: 'DM Sans', sans-serif;
+    transition: color 0.15s;
+  }
+
+  .reset-link:hover { color: #79b4ff; }
+
+  .checkbox-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 10px;
+    user-select: none;
+  }
+
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    margin-top: 2px;
+    accent-color: #3884ff;
+  }
+
+  .checkbox-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    line-height: 1.4;
+  }
+</style>
+
+<h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Employee work log submission form</h2>
+
+<div class="bg-scene">
+  <div class="bg-grid"></div>
+  <div class="bg-glow-1"></div>
+  <div class="bg-glow-2"></div>
+
+  <div class="logo-bar">
+    <div class="logo-mark">W</div>
+    <span class="logo-name">Work<span class="logo-dot">Log</span></span>
+  </div>
+
+  <div class="period-badge">Employee Portal</div>
+
+  <div class="form-card" id="formCard">
+    <p class="card-title">Log your hours</p>
+    <p class="card-sub">Fill in all fields to submit your work log</p>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <p class="progress-label" id="progressLabel">0 of 5 fields complete</p>
+
+    <hr class="divider-line">
+
+    <div class="fl-field">
+      <label class="fl-label" for="fName">Full name <span class="fl-req">*</span></label>
+      <input class="fl-input" type="text" id="fName" placeholder="e.g. Ada Okonkwo" autocomplete="name" oninput="track()">
+      <p class="fl-error" id="fNameErr"><i class="ti ti-alert-circle" aria-hidden="true" style="font-size:13px"></i> Please enter your full name.</p>
+    </div>
+
+    <div class="fl-field">
+      <label class="fl-label" for="fCountry">Working country <span class="fl-req">*</span></label>
+      <select class="fl-select" id="fCountry" onchange="track()">
+        <option value="">Select your country</option>
+        <option>Nigeria</option><option>Ghana</option><option>Kenya</option>
+        <option>South Africa</option><option>United Kingdom</option>
+        <option>United States</option><option>Canada</option>
+        <option>Germany</option><option>France</option>
+        <option>India</option><option>Australia</option><option>Brazil</option>
+        <option>Other</option>
+      </select>
+      <p class="fl-error" id="fCountryErr"><i class="ti ti-alert-circle" aria-hidden="true" style="font-size:13px"></i> Please select your country.</p>
+    </div>
+
+    <div class="fl-field">
+      <label class="fl-label" for="fPeriod">Work period <span class="fl-req">*</span></label>
+      <input class="fl-input" type="week" id="fPeriod" oninput="track()" style="color-scheme:dark">
+      <p class="fl-error" id="fPeriodErr"><i class="ti ti-alert-circle" aria-hidden="true" style="font-size:13px"></i> Please select a work period.</p>
+    </div>
+
+    <div class="fl-field">
+      <label class="fl-label">Hours worked <span class="fl-req">*</span></label>
+      <div class="tabs">
+        <button class="tab-btn active" id="tabM" onclick="switchTab('manual')"><i class="ti ti-keyboard" aria-hidden="true" style="font-size:13px;margin-right:4px;vertical-align:-1px"></i>Enter manually</button>
+        <button class="tab-btn" id="tabU" onclick="switchTab('upload')"><i class="ti ti-upload" aria-hidden="true" style="font-size:13px;margin-right:4px;vertical-align:-1px"></i>Upload file</button>
+      </div>
+
+      <div id="panelM">
+        <input class="fl-input" type="number" id="fHours" placeholder="e.g. 40" min="0.5" max="168" step="0.5" oninput="track()">
+        <p class="fl-error" id="fHoursErr"><i class="ti ti-alert-circle" aria-hidden="true" style="font-size:13px"></i> Enter a valid number of hours (0.5 to 168).</p>
+      </div>
+
+      <div id="panelU" style="display:none">
+        <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileIn').click()" ondragover="doDrag(event,true)" ondragleave="doDrag(event,false)" ondrop="doDrop(event)">
+          <div class="drop-icon"><i class="ti ti-file-spreadsheet" aria-hidden="true"></i></div>
+          <p class="drop-text">Click to browse or drag and drop</p>
+          <p class="drop-hint">CSV, XLSX, or PDF · max 5 MB</p>
+        </div>
+        <input type="file" id="fileIn" accept=".csv,.xlsx,.pdf" style="display:none" onchange="setFile(this.files[0])">
+        <div id="filePill" style="display:none">
+          <span class="file-pill">
+            <i class="ti ti-file" aria-hidden="true" style="font-size:13px"></i>
+            <span id="fileName"></span>
+            <span class="file-remove" onclick="clearFile(event)" aria-label="Remove file"><i class="ti ti-x"></i></span>
+          </span>
+        </div>
+        <p class="fl-error" id="fFileErr"><i class="ti ti-alert-circle" aria-hidden="true" style="font-size:13px"></i> Please upload a timesheet file.</p>
+      </div>
+    </div>
+
+    <div class="fl-field">
+      <label class="fl-label" for="fNotes">Notes (optional)</label>
+      <textarea class="fl-input fl-textarea" id="fNotes" rows="2" placeholder="Overtime details, context, or remarks..." style="resize:vertical;min-height:60px"></textarea>
+    </div>
+
+    <!-- Field 6: Confirmation Checkbox -->
+    <div class="fl-field">
+      <div class="checkbox-container">
+        <input class="checkbox-input" type="checkbox" id="fConfirm" onchange="track()">
+        <label class="checkbox-label" for="fConfirm">I confirm that this hours submission is accurate <span class="fl-req">*</span></label>
+      </div>
+      <p class="fl-error" id="fConfirmErr"><i class="ti ti-alert-circle" aria-hidden="true" style="font-size:13px"></i> You must confirm accuracy before submitting.</p>
+    </div>
+
+    <button class="submit-btn" id="submitBtn" onclick="doSubmit()" disabled>
+      <i class="ti ti-send" aria-hidden="true" style="font-size:14px;margin-right:7px;vertical-align:-1px"></i>Submit work log
+    </button>
+  </div>
+
+  <div class="form-card success-view" id="successCard">
+    <div class="success-ring"><i class="ti ti-check" aria-hidden="true"></i></div>
+    <p class="success-title">Log submitted!</p>
+    <p class="success-msg">Your work log record has been saved successfully and sent to the administrator portal.</p>
+    <div class="summary-box" id="summaryBox"></div>
+    <p style="font-size:11.5px;color:rgba(255,255,255,0.3);margin:0 0 1rem;">Submitted on <span id="submitTime"></span></p>
+    <button class="reset-link" onclick="doReset()"><i class="ti ti-refresh" aria-hidden="true" style="font-size:12px;vertical-align:-1px;margin-right:4px"></i>Submit another entry</button>
+  </div>
+</div>
+
+<script>
+  let mode = 'manual', uploadedFile = null;
+
+  const fields = () => ({
+    name: document.getElementById('fName').value.trim(),
+    country: document.getElementById('fCountry').value,
+    period: document.getElementById('fPeriod').value,
+    hours: document.getElementById('fHours').value,
+    confirm: document.getElementById('fConfirm').checked,
+    file: uploadedFile
+  });
+
+  function countComplete() {
+    const f = fields();
+    let n = 0;
+    if (f.name) n++;
+    if (f.country) n++;
+    if (f.period) n++;
+    if (mode === 'manual' && f.hours !== '' && parseFloat(f.hours) >= 0.5 && parseFloat(f.hours) <= 168 && (parseFloat(f.hours) % 0.5 === 0)) n++;
+    if (mode === 'upload' && f.file) n++;
+    if (f.confirm) n++;
+    return n;
+  }
+
+  function track() {
+    const n = countComplete();
+    const pct = Math.round((n / 5) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = n + ' of 5 fields complete';
+    document.getElementById('submitBtn').disabled = (n < 5);
+  }
+
+  function switchTab(t) {
+    mode = t;
+    document.getElementById('tabM').classList.toggle('active', t === 'manual');
+    document.getElementById('tabU').classList.toggle('active', t === 'upload');
+    document.getElementById('panelM').style.display = t === 'manual' ? 'block' : 'none';
+    document.getElementById('panelU').style.display = t === 'upload' ? 'block' : 'none';
+    showErr('fHoursErr', false);
+    showErr('fFileErr', false);
+    track();
+  }
+
+  function doDrag(e, over) { e.preventDefault(); document.getElementById('dropZone').classList.toggle('drag', over); }
+
+  function doDrop(e) {
+    e.preventDefault();
+    document.getElementById('dropZone').classList.remove('drag');
+    if (e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]);
+  }
+
+  function setFile(f) {
+    if (!f) return;
+    const validExtensions = ['.csv', '.xlsx', '.pdf'];
+    const fileExtension = f.name.substring(f.name.lastIndexOf('.')).toLowerCase();
+    if (!validExtensions.includes(fileExtension)) {
+      showErr('fFileErr', true, 'Unsupported format. Use CSV, XLSX, or PDF.');
+      return;
+    }
+    if (f.size > 5 * 1024 * 1024) {
+      showErr('fFileErr', true, 'File size exceeds 5MB limit.');
+      return;
+    }
+    uploadedFile = f;
+    document.getElementById('fileName').textContent = f.name;
+    document.getElementById('filePill').style.display = 'block';
+    showErr('fFileErr', false);
+    track();
+  }
+
+  function clearFile(event) {
+    if (event) event.stopPropagation();
+    uploadedFile = null;
+    document.getElementById('filePill').style.display = 'none';
+    document.getElementById('fileIn').value = '';
+    track();
+  }
+
+  function showErr(id, show, customMsg = '') {
+    const errEl = document.getElementById(id);
+    errEl.classList.toggle('show', show);
+    if (customMsg) errEl.innerHTML = `<i class="ti ti-alert-circle" aria-hidden="true" style="font-size:13px"></i> ` + customMsg;
+    
+    const inputId = { fNameErr:'fName', fCountryErr:'fCountry', fPeriodErr:'fPeriod', fHoursErr:'fHours' }[id];
+    if (inputId) document.getElementById(inputId).classList.toggle('err', show);
+    if (id === 'fFileErr') document.getElementById('dropZone').classList.toggle('err', show);
+  }
+
+  // Immediate error clearing on input
+  document.getElementById('fName').addEventListener('input', () => {
+    if (document.getElementById('fName').value.trim()) showErr('fNameErr', false);
+  });
+  document.getElementById('fCountry').addEventListener('change', () => {
+    if (document.getElementById('fCountry').value) showErr('fCountryErr', false);
+  });
+  document.getElementById('fPeriod').addEventListener('input', () => {
+    if (document.getElementById('fPeriod').value) showErr('fPeriodErr', false);
+  });
+  document.getElementById('fHours').addEventListener('input', () => {
+    const val = parseFloat(document.getElementById('fHours').value);
+    if (val >= 0.5 && val <= 168 && val % 0.5 === 0) showErr('fHoursErr', false);
+  });
+  document.getElementById('fConfirm').addEventListener('change', () => {
+    if (document.getElementById('fConfirm').checked) showErr('fConfirmErr', false);
+  });
+
+  function doSubmit() {
+    const f = fields();
+    let ok = true;
+
+    if (!f.name) { showErr('fNameErr', true); ok = false; } else { showErr('fNameErr', false); }
+    if (!f.country) { showErr('fCountryErr', true); ok = false; } else { showErr('fCountryErr', false); }
+    if (!f.period) { showErr('fPeriodErr', true); ok = false; } else { showErr('fPeriodErr', false); }
+
+    if (mode === 'manual') {
+      const h = parseFloat(f.hours);
+      const bad = f.hours === '' || isNaN(h) || h < 0.5 || h > 168 || (h % 0.5 !== 0);
+      if (bad) { showErr('fHoursErr', true); ok = false; } else { showErr('fHoursErr', false); }
+    } else {
+      if (!f.file) { showErr('fFileErr', true); ok = false; } else { showErr('fFileErr', false); }
+    }
+
+    if (!f.confirm) { showErr('fConfirmErr', true); ok = false; } else { showErr('fConfirmErr', false); }
+
+    if (!ok) return;
+
+    let formattedPeriod = f.period;
+    if (f.period.includes('-W')) {
+      const parts = f.period.split('-W');
+      formattedPeriod = `Week ${parts[1]}, ${parts[0]}`;
+    }
+
+    const hoursDisplay = mode === 'manual' ? parseFloat(f.hours).toFixed(1) + ' hrs' : uploadedFile.name;
+
+    document.getElementById('summaryBox').innerHTML =
+      row('Employee Name', f.name) + 
+      row('Country', f.country) + 
+      row('Period', formattedPeriod) + 
+      row('Log Record', hoursDisplay, true);
+
+    const now = new Date();
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const dateStr = now.toLocaleDateString('en-US', options);
+    const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
+    const ms = String(now.getMilliseconds()).padStart(3, '0');
+
+    document.getElementById('submitTime').textContent = `${dateStr} at ${timeStr}.${ms}`;
+
+    document.getElementById('formCard').style.display = 'none';
+    document.getElementById('successCard').style.display = 'block';
+  }
+
+  function row(k, v, highlight = false) {
+    return `<div class="sum-row"><span class="sum-key">${k}</span><span class="sum-val ${highlight ? 'accent' : ''}">${v}</span></div>`;
+  }
+
+  function doReset() {
+    ['fName', 'fHours', 'fNotes'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('fCountry').value = '';
+    document.getElementById('fPeriod').value = '';
+    document.getElementById('fConfirm').checked = false;
+    clearFile();
+    switchTab('manual');
+    ['fNameErr', 'fCountryErr', 'fPeriodErr', 'fHoursErr', 'fFileErr', 'fConfirmErr'].forEach(id => showErr(id, false));
+    document.getElementById('successCard').style.display = 'none';
+    document.getElementById('formCard').style.display = 'block';
+    track();
+  }
+
+  track();
+</script>
