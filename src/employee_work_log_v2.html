@@ -1,112 +1,134 @@
-<link rel="stylesheet" href="styles.css">
-<script src="script.js" defer></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WorkLog Employee Portal</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Employee work log submission form</h2>
 
-<h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Employee work log submission form</h2>
+  <div class="bg-scene">
+    <div class="bg-grid"></div>
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
 
-<div class="bg-scene">
-  <div class="bg-grid"></div>
-  <div class="bg-glow-1"></div>
-  <div class="bg-glow-2"></div>
-
-  <div class="logo-bar">
-    <div class="logo-mark">W</div>
-    <span class="logo-name">Work<span class="logo-dot">Log</span></span>
-  </div>
-
-  <div class="period-badge">Employee Portal</div>
-
-  <div class="form-card" id="formCard">
-    <p class="card-title">Log your hours</p>
-    <p class="card-sub">Fill in all fields to submit your work log</p>
-
-    <div class="progress-bar">
-      <div class="progress-fill" id="progressFill"></div>
-    </div>
-    <p class="progress-label" id="progressLabel">0 of 5 fields complete</p>
-
-    <hr class="divider-line">
-
-    <div class="fl-field">
-      <label class="fl-label" for="fName">Full name <span class="fl-req">*</span></label>
-      <input class="fl-input" type="text" id="fName" placeholder="e.g. Ada Okonkwo" autocomplete="name" oninput="track()">
-      <p class="fl-error" id="fNameErr"><i class="ti ti-alert-circle" aria-hidden="true" style="font-size:13px"></i> Please enter your full name.</p>
+    <div class="logo-bar">
+      <div class="logo-mark">W</div>
+      <span class="logo-name">Work<span class="logo-dot">Log</span></span>
     </div>
 
-    <div class="fl-field">
-      <label class="fl-label" for="fCountry">Working country <span class="fl-req">*</span></label>
-      <select class="fl-select" id="fCountry" onchange="track()">
-        <option value="">Select your country</option>
-        <option>Nigeria</option><option>Ghana</option><option>Kenya</option>
-        <option>South Africa</option><option>United Kingdom</option>
-        <option>United States</option><option>Canada</option>
-        <option>Germany</option><option>France</option>
-        <option>India</option><option>Australia</option><option>Brazil</option>
-        <option>Other</option>
-      </select>
-      <p class="fl-error" id="fCountryErr"><i class="ti ti-alert-circle" aria-hidden="true" style="font-size:13px"></i> Please select your country.</p>
-    </div>
+    <div class="period-badge">Employee Portal</div>
 
-    <div class="fl-field">
-      <label class="fl-label" for="fPeriod">Work period <span class="fl-req">*</span></label>
-      <input class="fl-input" type="week" id="fPeriod" oninput="track()" style="color-scheme:dark">
-      <p class="fl-error" id="fPeriodErr"><i class="ti ti-alert-circle" aria-hidden="true" style="font-size:13px"></i> Please select a work period.</p>
-    </div>
+    <!-- Form Card -->
+    <main class="form-card" id="formCard">
+      <h3 class="card-title">Log your hours</h3>
+      <p class="card-sub">Fill in all fields to submit your work log</p>
 
-    <div class="fl-field">
-      <label class="fl-label">Hours worked <span class="fl-req">*</span></label>
-      <div class="tabs">
-        <button class="tab-btn active" id="tabM" onclick="switchTab('manual')"><i class="ti ti-keyboard" aria-hidden="true" style="font-size:13px;margin-right:4px;vertical-align:-1px"></i>Enter manually</button>
-        <button class="tab-btn" id="tabU" onclick="switchTab('upload')"><i class="ti ti-upload" aria-hidden="true" style="font-size:13px;margin-right:4px;vertical-align:-1px"></i>Upload file</button>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <p class="progress-label" id="progressLabel">0 of 5 fields complete</p>
+
+      <hr class="divider-line">
+
+      <!-- Field 1: Full name -->
+      <div class="fl-field">
+        <label class="fl-label" for="fName">Full name <span class="fl-req">*</span></label>
+        <input class="fl-input" type="text" id="fName" placeholder="e.g. Ada Okonkwo" autocomplete="name" oninput="track()">
+        <p class="fl-error" id="fNameErr"><i class="ti ti-alert-circle" aria-hidden="true" style="font-size:13px"></i> Please enter your full name.</p>
       </div>
 
-      <div id="panelM">
-        <input class="fl-input" type="number" id="fHours" placeholder="e.g. 40" min="0.5" max="168" step="0.5" oninput="track()">
-        <p class="fl-error" id="fHoursErr"><i class="ti ti-alert-circle" aria-hidden="true" style="font-size:13px"></i> Enter a valid number of hours (0.5 to 168).</p>
+      <!-- Field 2: Working country -->
+      <div class="fl-field">
+        <label class="fl-label" for="fCountry">Working country <span class="fl-req">*</span></label>
+        <select class="fl-select" id="fCountry" onchange="track()">
+          <option value="">Select your country</option>
+          <option value="Nigeria">Nigeria</option>
+          <option value="Ghana">Ghana</option>
+          <option value="Kenya">Kenya</option>
+          <option value="South Africa">South Africa</option>
+          <option value="United Kingdom">United Kingdom</option>
+          <option value="United States">United States</option>
+          <option value="Canada">Canada</option>
+          <option value="Germany">Germany</option>
+          <option value="India">India</option>
+          <option value="Australia">Australia</option>
+          <option value="Brazil">Brazil</option>
+          <option value="Other">Other</option>
+        </select>
+        <p class="fl-error" id="fCountryErr"><i class="ti ti-alert-circle" aria-hidden="true" style="font-size:13px"></i> Please select your country.</p>
       </div>
 
-      <div id="panelU" style="display:none">
-        <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileIn').click()" ondragover="doDrag(event,true)" ondragleave="doDrag(event,false)" ondrop="doDrop(event)">
-          <div class="drop-icon"><i class="ti ti-file-spreadsheet" aria-hidden="true"></i></div>
-          <p class="drop-text">Click to browse or drag and drop</p>
-          <p class="drop-hint">CSV, XLSX, or PDF · max 5 MB</p>
+      <!-- Field 3: Work period -->
+      <div class="fl-field">
+        <label class="fl-label" for="fPeriod">Work period <span class="fl-req">*</span></label>
+        <input class="fl-input" type="week" id="fPeriod" oninput="track()" style="color-scheme:dark">
+        <p class="fl-error" id="fPeriodErr"><i class="ti ti-alert-circle" aria-hidden="true" style="font-size:13px"></i> Please select a work period.</p>
+      </div>
+
+      <!-- Field 4: Hours worked tab selector -->
+      <div class="fl-field">
+        <label class="fl-label">Hours worked <span class="fl-req">*</span></label>
+        <div class="tabs">
+          <button type="button" class="tab-btn active" id="tabM" onclick="switchTab('manual')"><i class="ti ti-keyboard" aria-hidden="true" style="font-size:13px"></i>Enter manually</button>
+          <button type="button" class="tab-btn" id="tabU" onclick="switchTab('upload')"><i class="ti ti-upload" aria-hidden="true" style="font-size:13px"></i>Upload file</button>
         </div>
-        <input type="file" id="fileIn" accept=".csv,.xlsx,.pdf" style="display:none" onchange="setFile(this.files[0])">
-        <div id="filePill" style="display:none">
-          <span class="file-pill">
-            <i class="ti ti-file" aria-hidden="true" style="font-size:13px"></i>
-            <span id="fileName"></span>
-            <span class="file-remove" onclick="clearFile(event)" aria-label="Remove file"><i class="ti ti-x"></i></span>
-          </span>
+
+        <div id="panelM">
+          <input class="fl-input" type="number" id="fHours" placeholder="e.g. 40" min="0.5" max="168" step="0.5" oninput="track()">
+          <p class="fl-error" id="fHoursErr"><i class="ti ti-alert-circle" aria-hidden="true" style="font-size:13px"></i> Enter a valid number of hours (0.5 to 168).</p>
         </div>
-        <p class="fl-error" id="fFileErr"><i class="ti ti-alert-circle" aria-hidden="true" style="font-size:13px"></i> Please upload a timesheet file.</p>
+
+        <div id="panelU" style="display:none">
+          <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileIn').click()" ondragover="doDrag(event,true)" ondragleave="doDrag(event,false)" ondrop="doDrop(event)">
+            <div class="drop-icon"><i class="ti ti-file-spreadsheet" aria-hidden="true"></i></div>
+            <p class="drop-text">Click to browse or drag and drop</p>
+            <p class="drop-hint">CSV, XLSX, or PDF · max 5 MB</p>
+          </div>
+          <input type="file" id="fileIn" accept=".csv,.xlsx,.pdf" style="display:none" onchange="setFile(this.files[0])">
+          <div id="filePill" style="display:none">
+            <span class="file-pill">
+              <i class="ti ti-file" aria-hidden="true" style="font-size:13px"></i>
+              <span id="fileName"></span>
+              <span class="file-remove" onclick="clearFile(event)" aria-label="Remove file"><i class="ti ti-x"></i></span>
+            </span>
+          </div>
+          <p class="fl-error" id="fFileErr"><i class="ti ti-alert-circle" aria-hidden="true" style="font-size:13px"></i> Please upload a timesheet file.</p>
+        </div>
       </div>
-    </div>
 
-    <div class="fl-field">
-      <label class="fl-label" for="fNotes">Notes (optional)</label>
-      <textarea class="fl-input fl-textarea" id="fNotes" rows="2" placeholder="Overtime details, context, or remarks..." style="resize:vertical;min-height:60px"></textarea>
-    </div>
-
-    <!-- Field 6: Confirmation Checkbox -->
-    <div class="fl-field">
-      <div class="checkbox-container">
-        <input class="checkbox-input" type="checkbox" id="fConfirm" onchange="track()">
-        <label class="checkbox-label" for="fConfirm">I confirm that this hours submission is accurate <span class="fl-req">*</span></label>
+      <!-- Field 5: Notes -->
+      <div class="fl-field">
+        <label class="fl-label" for="fNotes">Notes (optional)</label>
+        <textarea class="fl-input fl-textarea" id="fNotes" rows="2" placeholder="Overtime details, context, or remarks..." style="resize:vertical;min-height:60px"></textarea>
       </div>
-      <p class="fl-error" id="fConfirmErr"><i class="ti ti-alert-circle" aria-hidden="true" style="font-size:13px"></i> You must confirm accuracy before submitting.</p>
-    </div>
 
-    <button class="submit-btn" id="submitBtn" onclick="doSubmit()" disabled>
-      <i class="ti ti-send" aria-hidden="true" style="font-size:14px;margin-right:7px;vertical-align:-1px"></i>Submit work log
-    </button>
-  </div>
+      <!-- Field 6: Confirmation Checkbox -->
+      <div class="fl-field">
+        <div class="checkbox-container">
+          <input class="checkbox-input" type="checkbox" id="fConfirm" onchange="track()">
+          <label class="checkbox-label" for="fConfirm">I confirm that this hours submission is accurate <span class="fl-req">*</span></label>
+        </div>
+        <p class="fl-error" id="fConfirmErr"><i class="ti ti-alert-circle" aria-hidden="true" style="font-size:13px"></i> You must confirm accuracy before submitting.</p>
+      </div>
 
-  <div class="form-card success-view" id="successCard">
-    <div class="success-ring"><i class="ti ti-check" aria-hidden="true"></i></div>
-    <h2 class="success-title">Log submitted!</h2>
-    <p class="success-msg">Your work log record has been saved successfully and sent to the administrator portal.</p>
-    <div class="summary-box" id="summaryBox"></div>
-    <p style="font-size:11.5px;color:rgba(255,255,255,0.3);margin:0 0 1rem;">Submitted on <span id="submitTime"></span></p>
-    <button class="reset-link" onclick="doReset()"><i class="ti ti-refresh" aria-hidden="true" style="font-size:12px;vertical-align:-1px;margin-right:4px"></i>Submit another entry</button>
+      <button class="submit-btn" id="submitBtn" onclick="doSubmit()" disabled>
+        <i class="ti ti-send" aria-hidden="true" style="font-size:14px;margin-right:7px;vertical-align:-1px"></i>Submit work log
+      </button>
+    </main>
+
+    <!-- Success View -->
+    <main class="form-card success-view" id="successCard">
+      <div class="success-ring"><i class="ti ti-check" aria-hidden="true"></i></div>
+      <h3 class="success-title">Log submitted!</h3>
+      <p class="success-msg">Your work log record has been saved successfully and sent to the administrator portal.</p>
+      <div class="summary-box" id="summaryBox"></div>
+      <p class="submit-time-txt">Submitted on <span id="submitTime"></span></p>
+      <button class="reset-link" onclick="doReset()"><i class="ti ti-refresh" aria-hidden="true" style="font-size:12px;vertical-align:-1px;margin-right:4px"></i>Submit another entry</button>
+    </main>
   </div>
-</div>
+</body>
+</html>
